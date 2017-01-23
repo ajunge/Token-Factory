@@ -1,7 +1,7 @@
 //for Mist & Metamask support
 var Web3 = require("web3");
 var Pudding = require("ether-pudding");
-//var uportLib = require('uport-lib');
+var uportlib = require('uport-lib');
 var exported_web3 = null;
 
 window.offline = true; //default is there is no web3 available.
@@ -18,18 +18,23 @@ if (typeof web3 !== 'undefined') {
 
 } else {
   //If not available, check if the user has set to use uPort (localstorage).
-  if(localStorage["provider"] == "uport") {
-    /*var uport = new uportLib("Token Factory");
-    var uportProvider = uport.getUportProvider();
-    exported_web3 = new Web3(uportProvider);
-    window.offline = false;*/
-  } else {
+  //if(localStorage["provider"] == "uport") {
+    var uport = new uportlib.Uport("Token Factory");
+    exported_web3 = uport.getWeb3();
+
+    //Just to connect with uport
+    exported_web3.eth.getAccounts(function(error, accounts) {
+      console.log(accounts)
+
+    })
+    window.offline = false;
+  //} else {
     //redirect to front-page?
-    console.log("A web3 provider is NOT present. Telling user to get one.");
-    console.log("For now. NOT connected to a localhost.");
-    console.log("THUS. Offline flag remains TRUE.");
-    exported_web3 = new Web3();
-  }
+    //console.log("A web3 provider is NOT present. Telling user to get one.");
+    //console.log("For now. NOT connected to a localhost.");
+    //console.log("THUS. Offline flag remains TRUE.");
+    //exported_web3 = new Web3();
+  //}
 
   //If not -> set offline and prompt to set provider.
   // Use uPort if MetaMask is not available

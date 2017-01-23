@@ -82,6 +82,8 @@ var TxForm = React.createClass({
         //args[3] = string _tokenSymbol
         //var creation_data = ST.new.getData(args[0], args[1], args[2], args[3], {from: addr, data: "0x" + HumanStandardToken.prototype.binary, gasPrice: 50000000000, gas: 3100000});
 
+        console.log("ready to create");
+
         ST.new(args[0], args[1], args[2], args[3], {from: addr, data: HumanStandardToken.prototype.binary, gasPrice: 20000000000, gas: 1000000}, function(err, result) {
           //NOTE: This callback fires twice. Once tx hash comes in. Then when mined.
           if(err) {
